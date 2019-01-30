@@ -1,4 +1,4 @@
-const Title = require('./lib/models/title');
+const Title = require('../models/title');
 
 module.exports = {
   async searchByTitle({ title }) {
