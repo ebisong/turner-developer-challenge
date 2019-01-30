@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import ResultsList from './ResultsList';
+import SearchBar from './SearchBar';
 import './App.css';
 import axios from 'axios';
 const {
   REACT_APP_SERVER_URL,
 } = process.env;
 
+
 class App extends Component {
   state = {
     titles: []
   };
 
-  async componentDidMount() {
-    const titles = await this.searchTitles({ name: 'Four Brothers'});
-    this.setState({
-      titles
-    });
-    console.log(this.state.titles);
+  async search({ name }) {
+    const { data: titles } = await this.searchTitles({ name });
+    this.setState({ titles });
   }
 
   searchTitles = async ({ name }) => {
@@ -26,20 +25,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <SearchBar search={this.search.bind(this)}/>
+        <ResultsList titles={this.state.titles}/>
       </div>
     );
   }
